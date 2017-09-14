@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html>
+<title>GPS WEB PAGE</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width , maximum-scale=1.0">
+	<!-- bootstrap style-->
+<link rel="stylesheet" href="css/bootstrap.css">
+	<!-- template style-->
+<link rel="stylesheet" href="css/w3.css">
+	<!-- table  style-->
+<link rel="stylesheet" type="text/css" href="css/dataTables.bootstrap.css">
+	<!-- button  style-->
+<link rel="stylesheet" type="text/css" href="css/buttons.bootstrap.css">
+	<!-- Datepiker -->
+<link rel="stylesheet" type="text/css" href="css/daterangepicker.css" />
+	<!-- fonts style-->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body {font-family: "Lato", sans-serif}
+.mySlides {display: none}
+</style>
+
+	<!-- js script-->
+<script src="jquery/jquery-2.1.4.js" type="text/javascript"></script>
+ <!-- data table -->
+<script src="jquery/jquery.dataTables.js" type="text/javascript"></script>
+<script src="jquery/dataTables.bootstrap.js" type="text/javascript"></script>
+ <!-- button data table -->
+<script src="jquery/dataTables.buttons.js" type="text/javascript"></script>
+<script src="jquery/buttons.bootstrap.js" type="text/javascript"></script>
+<script src="jquery/jszip.js" type="text/javascript"></script>
+<script src="jquery/buttons.html5.js" type="text/javascript"></script>
+ <!-- Datepiker -->
+<script type="text/javascript" src="jquery/moment.min.js"></script>
+<script type="text/javascript" src="jquery/daterangepicker.js"></script>
+	<!-- maps.googleapis -->
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqEujyPgiD0-g0S2tS0cRoMmrEmMb5W68&callback=initMap" type="text/javascript"></script>
+
+
+
+<body onload="PageReady()" >
+<!-------------------- Navbar Menu -------------------->
+<div class="w3-top">
+ <div class="w3-bar w3-black w3-card-2" style="padding:0 10px">
+	<h3 ><b><img src="images/poi.gif">GPS<br>WEB PAGE</b></h3>
+ </div>
+  <div class="w3-bar w3-black w3-card-2">
+    <a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+    <a href="#HOME" class="w3-bar-item w3-button w3-padding-large" onclick="ShowMenu('HOME')">HOME</a>
+    <a href="#TimeAttendance" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="ShowMenu('TimeAttendance')">TimeAttendance</a>
+    <a href="#CheckInOut" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="ShowMenu('CheckInOut')">Check In-Out</a>
+    <a href="#Mileage" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="ShowMenu('Mileage')">Mileage</a>
+	<a href="#Usermanagement" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="ShowMenu('Usermanagement')" id="menuManage">User management</a>
+
+	<div class="w3-padding-large w3-hide-small w3-right">
+	<var id="userLogin" class="w3-padding-large"></var>
+	<a href=javascript:if(confirm('ยืนยันการออกจากระบบ')==true){window.location='Logout.php';} class=" w3-padding-large w3-hover-red" ><i class="fa fa-sign-out"></i> Logout</a>
+	</div>
+  </div>
+</div>
+
+<!-- Navbar on small screens -->
+<div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:115px">
+  <a href="#TimeAttendance" class="w3-bar-item w3-button w3-padding-large" onclick="ShowMenu('TimeAttendance')">TimeAttendance</a>
+  <a href="#CheckInOut" class="w3-bar-item w3-button w3-padding-large" onclick="ShowMenu('CheckInOut')">Check In-Out</a>
+  <a href="#Mileage" class="w3-bar-item w3-button w3-padding-large" onclick="ShowMenu('Mileage')">Mileage</a>
+  <a href="#Usermanagement" class="w3-bar-item w3-button w3-padding-large" onclick="ShowMenu('Usermanagement')" id="menuManagesmall">User management</a>
+  <br><br>
+  <var id="userLoginSmall" class="w3-padding-large"></var>
+  <a href=javascript:if(confirm('ยืนยันการออกจากระบบ')==true){window.location='Logout.php';} class="w3-bar-item w3-hover-red w3-padding-large"><i class="fa fa-sign-out"></i> Logout</a>
+</div>
+<!-------------------- End Navbar Menu -------------------->
+
+
+
+<!---------------------- Page content ---------------------->
+
+
+  <!-- The Home Section -->
+  <div class="w3-container w3-content w3-center w3-animate-top" style="max-width:90%;padding-top:146px;display:none" id="HOME">
+    <h2 class="w3-wide">LOCATION</h2>
+
+		<div style=" margin:30px 0 5px ; padding:10px; background-color:#000;border-radius: 10px;"  class="w3-center">
+           	<div class="row" style=" margin:0 20px 0 20px; ">
+                <div class="col lg 4-xs-4 col-sm-4" >
+                    <div style="text-align:center;">
+                        <select class="btn btn-default dropdown-toggle form-control" id="SelectUser">
+                            <option value="0">Select User</option>
+                        </select>
+                    </div>
+                </div>
+                        
+                <div class="col lg 1-xs-1 col-sm-1">
+                    <div class="btn-group">
+                        <button id="BTSelectUser" type="button" class="btn btn-default"> 
+                            <i class="fa fa-search"></i> Search</a>
+                        </button>
+                    </div>
+                </div>
+            </div>
+		</div>
+		
+		<div style="height:650px; border:5px solid #000; margin:10px 0 " id="MapLocation"> </div>
+  </div>
+  
+    <!-------------------- The TimeAttendance Section -------------------->
+  <div class="w3-container w3-content w3-center w3-animate-top" style="max-width:90%;padding-top:146px; display:none" id="TimeAttendance">
+    <h2 class="w3-wide">TimeAttendance</h2>
+	
+	<div class="w3-content " style="max-width:100%; background-color:#d9d9d9; margin:30px 0 10px; padding:10px; border-radius: 10px; text-align:center;" >
+		<button id="BTGetUserTimeAttendance" class="btn btn-default" ><i class="fa fa-user" ></i> Select User</button>
+		<button id="reportrangeTimeAttendance" class="btn btn-default"> 
+			<b>Date </b>&nbsp;&nbsp;<i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
+			<span></span> <b class="caret"></b>
+		</button>
+		<button id="BTSearchTimeAttendance" class="btn btn-default"><i class="fa fa-search"></i> Search</a></button>
+	</div>
+	
+	<div class="w3-content w3-justify" style="max-width:100%; background-color:#d9d9d9; padding:20px" >
+		<table class="w3-table w3-hoverable"  cellspacing="0" id="tableTimeAttendance" >
+			<thead style="background-color:#000;color:#fff;">
+			 <tr>
+				<th style="text-align: center!important;">Full Name</th>
+				<th style="text-align: center!important;">Start Time</th>
+				<th style="text-align: center!important;">Location</th>
+				<th style="text-align: center!important;">End Time</th>
+				<th style="text-align: center!important;">Location</th>
+			  </tr>
+			</thead>
+
+		</table>
+
+    </div>
+	<h4 id="ShowLOADINGTimeAttendance" align="center"><img src="images/11.gif"><b>LOADING...<b></h4>
+  </div>
+  
+    <!-- Popup Select User TimeAttendance -->
+  <div id="PopupSelectUserTimeAttendance" class="w3-modal">
+    <div class="w3-modal-content w3-animate-top w3-card-4">
+	
+      <header class="w3-container w3-teal w3-center w3-padding-32"> 
+        <span onclick="document.getElementById('PopupSelectUserTimeAttendance').style.display='none'" 
+       class="w3-button w3-teal w3-xlarge w3-display-topright">×</span>
+        <h2 class="w3-wide"><i class="fa fa-user w3-margin-right"></i>Select User</h2>
+      </header>
+      <div class="w3-container" style="margin-top:30px">
+
+			<table class="w3-table w3-hoverable"  cellspacing="0" id="tablePopupUserTimeAttendance" >
+				<thead style="display:table; width:100%; table-layout:fixed; background-color:#000; color:#fff;">
+				  <tr>
+					<th style="text-align:center!important;">
+						<input type="checkbox" name="CheckAlluserTimeAttendance" id="CheckAlluserTimeAttendance" value="all" style="width:15px; height:15px;">
+					</th>
+					<th style="text-align:center!important;">User ID</th>
+					<th style="text-align:center!important;">Name</th>
+					<th style="text-align:center!important;">Branch</th>
+					<th style="text-align:center!important;">Position</th>
+				  </tr>
+				</thead>
+			</table>
+			
+		<button class="w3-button w3-block w3-teal w3-padding-16 w3-section w3-right" style="background-color: #40a01e!important;" id="BTOkUserTimeAttendance">OK <i class="fa fa-check"></i></button>
+        <button class="w3-button w3-red w3-section" onclick="document.getElementById('PopupSelectUserTimeAttendance').style.display='none'">Close <i class="fa fa-remove"></i></button>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  
+  
+    <!-------------------- The CheckInOut Section -------------------->
+  <div class="w3-container w3-content w3-center w3-animate-top" style="max-width:90%;padding-top:146px; display:none" id="CheckInOut">
+    <h2 class="w3-wide">CheckInOut</h2>
+	
+	<div class="w3-content " style="max-width:100%; background-color:#d9d9d9; margin:30px 0 10px; padding:10px; border-radius: 10px; text-align:center;" >
+		<button id="BTGetUserCheckInOut" class="btn btn-default" ><i class="fa fa-user" ></i> Select User</button>
+		<button id="reportrange" class="btn btn-default"> 
+			<b>Date </b>&nbsp;&nbsp;<i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
+			<span></span> <b class="caret"></b>
+		</button>
+		<button id="BTSearchCheckInOut" class="btn btn-default"><i class="fa fa-search"></i> Search</a></button>
+	</div>
+	
+	<div class="w3-content w3-justify" style="max-width:100%; background-color:#d9d9d9; padding:20px" >
+		<table class="w3-table w3-hoverable"  cellspacing="0" id="tableCheckInOut" >
+			<thead style="background-color:#000;color:#fff;">
+			 <tr>
+				<th style="text-align: center!important;">Full Name</th>
+				<th style="text-align: center!important;">Customer</th>
+				<th style="text-align: center!important;">Checkin date</th>
+				<th style="text-align: center!important;">Checkin location</th>
+				<th style="text-align: center!important;">Checkout date</th>
+				<th style="text-align: center!important;">Checkout location</th>
+				<th style="text-align: center!important;">Operating time</th>
+			  </tr>
+			</thead>
+
+		</table>
+
+    </div>
+	<h4 id="ShowLOADING" align="center"><img src="images/11.gif"><b>LOADING...<b></h4>
+  </div>
+  
+  <!-- Popup Select User CheckInOut -->
+  <div id="PopupSelectUser" class="w3-modal">
+    <div class="w3-modal-content w3-animate-top w3-card-4">
+	
+      <header class="w3-container w3-teal w3-center w3-padding-32"> 
+        <span onclick="document.getElementById('PopupSelectUser').style.display='none'" 
+       class="w3-button w3-teal w3-xlarge w3-display-topright">×</span>
+        <h2 class="w3-wide"><i class="fa fa-user w3-margin-right"></i>Select User</h2>
+      </header>
+      <div class="w3-container" style="margin-top:30px">
+
+			<table class="w3-table w3-hoverable"  cellspacing="0" id="tablePopupUserCheckInOut" >
+				<thead style="display:table; width:100%; table-layout:fixed; background-color:#000; color:#fff;">
+				  <tr>
+					<th style="text-align:center!important;">
+						<input type="checkbox" name="CheckAlluserCheckInOut" id="CheckAlluserCheckInOut" value="all" style="width:15px; height:15px;">
+					</th>
+					<th style="text-align:center!important;">User ID</th>
+					<th style="text-align:center!important;">Name</th>
+					<th style="text-align:center!important;">Branch</th>
+					<th style="text-align:center!important;">Position</th>
+				  </tr>
+				</thead>
+			</table>
+			
+		<button class="w3-button w3-block w3-teal w3-padding-16 w3-section w3-right" style="background-color: #40a01e!important;" id="BTOkUserCheckInOut">OK <i class="fa fa-check"></i></button>
+        <button class="w3-button w3-red w3-section" onclick="document.getElementById('PopupSelectUser').style.display='none'">Close <i class="fa fa-remove"></i></button>
+      </div>
+    </div>
+  </div>
+  
+
+  
+  
+  
+        <!-------------------- The Mileage Section -------------------->
+  <div class="w3-container w3-content w3-center w3-animate-top" style="max-width:90%;padding-top:146px; display:none" id="Mileage">
+    <h2 class="w3-wide">Mileage</h2>
+
+	<div class="w3-content " style="max-width:100%; background-color:#d9d9d9; margin:30px 0 10px; padding:10px; border-radius: 10px; text-align:center;" >
+		<button id="BTGetUserMileage" class="btn btn-default" ><i class="fa fa-user" ></i> Select User</button>
+		<button id="reportrangeMileage" class="btn btn-default"> 
+			<b>Date </b>&nbsp;&nbsp;<i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
+			<span></span> <b class="caret"></b>
+		</button>
+		<button id="BTSearchMileage" class="btn btn-default"><i class="fa fa-search"></i> Search</a></button>
+	</div>	
+ 
+ 	<div class="w3-content w3-justify" style="max-width:100%; background-color:#d9d9d9; padding:20px" >
+		<table class="w3-table w3-hoverable"  cellspacing="0" id="tableMileage" >
+			<thead style="background-color:#000;color:#fff;">
+			 <tr>
+				<th style="text-align: center!important;">Full Name</th>
+				<th style="text-align: center!important;">Start Time</th>
+				<th style="text-align: center!important;">Location</th>
+				<th style="text-align: center!important;">End Time</th>
+				<th style="text-align: center!important;">Location</th>
+				<th style="text-align: center!important;">timeTravel</th>
+				<th style="text-align: center!important;">mileage</th>
+			  </tr>
+			</thead>
+
+		</table>
+
+    </div>
+	<h4 id="ShowLOADINGMileage" align="center"><img src="images/11.gif"><b>LOADING...<b></h4>
+  </div>
+  
+    <!-- Popup Select User Mileage -->
+  <div id="PopupSelectUserMileage" class="w3-modal">
+    <div class="w3-modal-content w3-animate-top w3-card-4">
+	
+      <header class="w3-container w3-teal w3-center w3-padding-32"> 
+        <span onclick="document.getElementById('PopupSelectUserMileage').style.display='none'" 
+       class="w3-button w3-teal w3-xlarge w3-display-topright">×</span>
+        <h2 class="w3-wide"><i class="fa fa-user w3-margin-right"></i>Select User</h2>
+      </header>
+      <div class="w3-container" style="margin-top:30px">
+
+			<table class="w3-table w3-hoverable"  cellspacing="0" id="tablePopupUserMileage" >
+				<thead style="display:table; width:100%; table-layout:fixed; background-color:#000; color:#fff;">
+				  <tr>
+					<th style="text-align:center!important;">
+						<input type="checkbox" name="CheckAlluserMileage" id="CheckAlluserMileage" value="all" style="width:15px; height:15px;">
+					</th>
+					<th style="text-align:center!important;">User ID</th>
+					<th style="text-align:center!important;">Name</th>
+					<th style="text-align:center!important;">Branch</th>
+					<th style="text-align:center!important;">Position</th>
+				  </tr>
+				</thead>
+			</table>
+			
+		<button class="w3-button w3-block w3-teal w3-padding-16 w3-section w3-right" style="background-color: #40a01e!important;" id="BTOkUserMileage">OK <i class="fa fa-check"></i></button>
+        <button class="w3-button w3-red w3-section" onclick="document.getElementById('PopupSelectUserMileage').style.display='none'">Close <i class="fa fa-remove"></i></button>
+      </div>
+    </div>
+  </div>  
+  
+  
+
+  
+  
+  
+   <!-------------------- The Usermanagement Section -------------------->
+  <div class="w3-container w3-content w3-center w3-animate-top" style="max-width:90%;padding-top:146px; display:none" id="Usermanagement">
+    <h2 class="w3-wide">Usermanagement</h2><br>
+	
+ 	<div class="w3-content w3-justify" style="max-width:100%; background-color:#d9d9d9; padding:20px; border-radius:10px;" >
+		<table class="w3-table w3-hoverable"  cellspacing="0" id="tableUsermanagement" >
+			<thead style="display:table; width:100%; table-layout:fixed; background-color:#000;color:#fff;">
+			  <tr>
+				<th style="text-align:center!important;">User ID</th>
+				<th style="text-align:center!important;">Name</th>
+				<th style="text-align:center!important;">Position</th>
+				<th style="text-align:center!important;">Branch</th>				
+				<th style="text-align:center!important;">Edit</th>
+				<th style="text-align:center!important;">Delete</th>
+			  </tr>
+			</thead>
+
+		</table>
+
+    </div>    
+  </div>
+
+  <!-- Popup Usermanagement New user-->
+  <div id="PopupUsermanagement" class="w3-modal">
+    <div class="w3-modal-content w3-animate-top w3-card-4">
+	
+      <header class="w3-container w3-teal w3-center w3-padding-32"> 
+        <span onclick="document.getElementById('PopupUsermanagement').style.display='none'" 
+       class="w3-button w3-teal w3-xlarge w3-display-topright">×</span>
+        <h2 class="w3-wide"><i class="fa fa-address-card w3-margin-right"></i>Info User</h2>
+      </header>
+      <div class="w3-container" style="margin-top:30px" id="formUsermanagement">
+	    <p style="margin:0 0 0 20px"><label><i class="fa fa-id-badge"></i> User ID</label></p>
+			<input style="margin:0 0 10px" class="w3-input w3-border" type="text" id="DataUserID">
+        <p style="margin:0 0 0 20px"><label><i class="fa fa-lock"></i> Password</label></p>
+			<input style="margin:0 0 10px" class="w3-input w3-border" type="password" id="DataPassword">
+		<p style="margin:0 0 0 20px"><label><i class="fa fa-user"></i> Name</label></p>
+			<input style="margin:0 0 10px" class="w3-input w3-border" type="text" id="DataName">
+		<p style="margin:0 0 0 20px"><label><i class="fa fa-globe"></i> Branch</label></p>
+			<input style="margin:0 0 10px" class="w3-input w3-border" type="text" id="DataBranch">
+		<p style="margin:0 0 0 20px"><label><i class="fa fa-street-view"></i> Position</label></p>
+			<input style="margin:0 0 10px" class="w3-input w3-border" type="text" id="DataPosition">
+		<p style="margin:0 0 0 20px"><label><i class="fa fa-sitemap"></i> Head</label></p>
+			<input style="margin:0 0 10px" class="w3-input w3-border" type="text" id="DataHead">
+		<p style="margin:0 0 0 20px; color:red;" id="fail" ></p>
+		<button class="w3-button w3-block w3-teal w3-padding-16 w3-section w3-right" style="background-color: #40a01e!important;" id="BTSaveNewUsermanagement">Save <i class="fa fa-check"></i></button>
+        <button class="w3-button w3-red w3-section" onclick="document.getElementById('PopupUsermanagement').style.display='none'">Close <i class="fa fa-remove"></i></button>
+      </div>
+    </div>
+  </div> 
+  
+    <!-- Popup  Edit user-->
+  <div id="PopupEditUser" class="w3-modal">
+    <div class="w3-modal-content w3-animate-top w3-card-4">
+	
+      <header class="w3-container w3-teal w3-center w3-padding-32"> 
+        <span onclick="document.getElementById('PopupEditUser').style.display='none'" 
+       class="w3-button w3-teal w3-xlarge w3-display-topright">×</span>
+        <h2 class="w3-wide"><i class="fa fa-address-card w3-margin-right"></i>Info User</h2>
+      </header>
+      <div class="w3-container" style="margin-top:30px" id="formEditUser">
+		<div id="dataEditUser">
+		</div>
+		<p style="margin:0 0 0 20px; color:red;" id="Editfail" ></p>
+		<button class="w3-button w3-block w3-teal w3-padding-16 w3-section w3-right" style="background-color: #40a01e!important;" id="BTSaveEditUsermanagement">Save <i class="fa fa-check"></i></button>
+        <button class="w3-button w3-red w3-section" onclick="document.getElementById('PopupEditUser').style.display='none'">Close <i class="fa fa-remove"></i></button>
+      </div>
+    </div>
+  </div> 
+
+  
+  
+  
+
+<!---------------------- End Page Content ---------------------->
+
+
+<!-- Footer -->
+<footer class="w3-container w3-padding-64 w3-center w3-opacity w3-light-grey w3-xlarge" style="margin-top:20px">
+  <p class="w3-medium">GPS wep page </p>
+</footer>
+
+<script language="JavaScript">
+
+// Used to toggle the menu on small screens when clicking on the menu button
+function myFunction() {
+    var x = document.getElementById("navDemo");
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+    } else { 
+        x.className = x.className.replace(" w3-show", "");
+    }
+}
+
+//---------------------------------------------------------------------//
+
+
+var json = [];
+	
+function PageReady(){
+	LoaduserLogin();
+	LoadMapLocation();
+	ShowMenu();
+	datepickerTimeAttendance();
+	TimeAttendance();
+	datepickerCheckInOut();
+	CheckInOut();
+	datepickerMileage();
+	Mileage();
+	Usermanagement();
+	
+urlInPage = window.location.href.split('#')[1];
+  switch(urlInPage) {
+    case "HOME":
+	  $("#HOME").show();
+      $("#TimeAttendance").hide();
+	  $("#CheckInOut").hide();
+	  $("#Mileage").hide();
+	  $("#Usermanagement").hide();
+	  LoadMapLocation();
+      break;
+    case "TimeAttendance":
+	  $("#HOME").hide();
+      $("#TimeAttendance").show();
+	  $("#CheckInOut").hide();
+	  $("#Mileage").hide();
+	  $("#Usermanagement").hide();
+      break;
+    case "CheckInOut":
+	  $("#HOME").hide();
+      $("#TimeAttendance").hide();
+	  $("#CheckInOut").show();
+	  $("#Mileage").hide();
+	  $("#Usermanagement").hide();
+      break;
+    case "Mileage":
+	  $("#HOME").hide();
+      $("#TimeAttendance").hide();
+	  $("#CheckInOut").hide();
+	  $("#Mileage").show();
+	  $("#Usermanagement").hide();
+      break;
+    case "Usermanagement":
+	  $.ajax({  
+			type:"POST",
+			url:"sessionLogin.php",
+			}).done(function(text){
+			jsonUser = $.parseJSON(text);
+		  if((jsonUser[0].userid) == "admin"){
+				$("#HOME").hide();
+				$("#TimeAttendance").hide();
+				$("#CheckInOut").hide();
+				$("#Mileage").hide();
+				$("#Usermanagement").show();
+		  }else{
+				alert("คุณไม่มีสิทธิ์ใช้งาน menu นี้");
+				window.location.href = "GPS.html#HOME";
+		  }
+	  });
+      break;
+    // add case here
+
+    default:
+      //alert("hi");
+	  $("#HOME").show();
+      $("#TimeAttendance").hide();
+	  $("#CheckInOut").hide();
+	  $("#Mileage").hide();
+	  $("#Usermanagement").hide();
+	  
+  }
+	
+}
+
+
+/////////// Show and hide body /////////////
+function ShowMenu(textMenu) {
+	
+  switch(textMenu) {
+    case "HOME":
+	  $("#HOME").show();
+      $("#TimeAttendance").hide();
+	  $("#CheckInOut").hide();
+	  $("#Mileage").hide();
+	  $("#Usermanagement").hide();
+	  LoadMapLocation();
+      break;
+    case "TimeAttendance":
+	  $("#HOME").hide();
+      $("#TimeAttendance").show();
+	  $("#CheckInOut").hide();
+	  $("#Mileage").hide();
+	  $("#Usermanagement").hide();
+      break;
+    case "CheckInOut":
+	  $("#HOME").hide();
+      $("#TimeAttendance").hide();
+	  $("#CheckInOut").show();
+	  $("#Mileage").hide();
+	  $("#Usermanagement").hide();
+      break;
+    case "Mileage":
+	  $("#HOME").hide();
+      $("#TimeAttendance").hide();
+	  $("#CheckInOut").hide();
+	  $("#Mileage").show();
+	  $("#Usermanagement").hide();
+      break;
+    case "Usermanagement":
+	  $("#HOME").hide();
+	  $("#TimeAttendance").hide();
+	  $("#CheckInOut").hide();
+	  $("#Mileage").hide();
+	  $("#Usermanagement").show();
+      break;
+    // add case here
+
+    default:
+      //alert("hi");
+	  $("#HOME").show();
+      $("#TimeAttendance").hide();
+	  $("#CheckInOut").hide();
+	  $("#Mileage").hide();
+	  $("#Usermanagement").hide();
+	  
+  }
+
+}
+
+
+
+/////////// Show user Login /////////////
+function LoaduserLogin() {
+$("#menuManage").hide();
+$("#menuManagesmall").hide();
+$("#Usermanagement").hide();
+
+	$.ajax({  
+			type:"POST",
+			url:"sessionLogin.php",
+			}).done(function(text){
+				//alert(text);
+				
+				if(text == ""){
+					alert("กรุณาเข้าสู่ระบบ");
+					window.location.href = "Login.html";
+					return false;
+				}else{
+					json = $.parseJSON(text);
+					var userNameLogin = '<span class="glyphicon glyphicon-user"></span> '+json[0].name;
+						$("#userLogin").html(userNameLogin);
+						$("#userLoginSmall").html(userNameLogin);
+
+					if((json[0].userid) == "admin"){
+						$("#menuManage").show();
+						$("#menuManagesmall").show();
+					}
+					
+						var optloop="<option value=''>Select User</option>";
+						for(i=0; i<json.length; i++){
+							optloop+="<option value="+json[i]["userid"]+">"+json[i]["name"]+"</option>"; 
+						}
+						$("#SelectUser").html(optloop);
+				}	
+			});
+	
+	$('#BTSelectUser').on('click',function() {
+		SelectUserVal = $("#SelectUser").val();
+			if( SelectUserVal == "" ){
+					alert ("กรุณาเลือก User !");
+					return false ;
+				}
+		//alert(SelectUserVal);
+		var dataI={"SelectUserVal":SelectUserVal};
+		$.ajax({
+            type:"POST",
+            url:"find_TB_LatLngOnline_SelectUser.php",
+            cache:true,
+            dataType:"JSON",
+            data:dataI,
+            async:true,
+            success:function(result){
+				if(result == null){
+					alert ("ยังไม่มีข้อมูลการใช้งานของวันนี้ !");
+					return false ;
+				}
+				//alert(result[1]["date"]);
+				myOptions = {
+				  center: new google.maps.LatLng("13.9187387","100.7330838"),
+				  zoom: 12,
+				  mapTypeId: google.maps.MapTypeId.ROADMAP
+				};
+				map = new google.maps.Map(document.getElementById("MapLocation"),myOptions);
+				infowindow = new google.maps.InfoWindow();
+					
+				//loop for marker //
+				for(x=0; x<result.length; x++){
+						
+					if(result[x]["lat"] != null){
+						if(x == (result.length)-1){
+							var image = 'images/iconMarker/male-2.png';
+							detail = "";
+							detail+='Date : '+result[x]["date"]+'<br/>';
+							detail+='Location : '+result[x]["location"];
+								
+							myCenter = new google.maps.LatLng(result[x]["lat"],result[x]["lng"]);	
+							marker = new google.maps.Marker({
+								map:map, 
+								html:detail,
+								position: myCenter,
+								icon: image
+							});		
+								
+								
+							//Show detail on load map
+							// infowindow = new google.maps.InfoWindow({ 
+								 // map:map, 
+								 // content:detail,  
+								 // position: myCenter, 
+							 // }); 
+								 
+							map.panTo(marker.getPosition());
+								
+							 //Show detailon click
+							google.maps.event.addListener(marker,'click',function(e){
+							infowindow.setContent(this.html);
+							infowindow.open(map,this);
+							});
+							
+						}else{
+							var imagepoint = 'images/iconMarker/point.png';
+							detail = "";
+							detail+='Date : '+result[x]["date"]+'<br/>';
+							detail+='Location : '+result[x]["location"];
+								
+							myCenter = new google.maps.LatLng(result[x]["lat"],result[x]["lng"]);	
+							marker = new google.maps.Marker({
+								map:map, 
+								html:detail,
+								position: myCenter,
+								icon: imagepoint
+							});		
+								
+								
+							//Show detail on load map
+							// infowindow = new google.maps.InfoWindow({ 
+								 // map:map, 
+								 // content:detail,  
+								 // position: myCenter, 
+							 // }); 
+								 
+							map.panTo(marker.getPosition());
+								
+							 //Show detailon click
+							google.maps.event.addListener(marker,'click',function(e){
+							infowindow.setContent(this.html);
+							infowindow.open(map,this);
+							});
+						}						
+					}
+				}
+			}//end success
+		});//end $.ajax 
+	});//end searchbtn
+	
+}
+
+
+
+/////////// Show user map /////////////
+function LoadMapLocation(){
+				$.ajax({
+				type:"POST",
+				url:"find_TB_LatLngOnline_All_Staff.php",
+				cache:true,
+				dataType:"JSON",
+				async:false,
+				success:function(result){
+					
+					var image = 'images/iconMarker/male-2.png';
+					myOptions = {
+					  center: new google.maps.LatLng("13.9187387","100.7330838"),
+					  zoom: 10,
+					  mapTypeId: google.maps.MapTypeId.ROADMAP
+					};
+					map = new google.maps.Map(document.getElementById("MapLocation"),myOptions);
+					infowindow = new google.maps.InfoWindow();
+					
+					//loop for marker //
+					for(x=0; x<result.length; x++){
+						
+						if(result[x]["lat"] != null){
+							detail = "";
+							detail+='<b>'+result[x]["userid"]+' : '+result[x]["name"]+'</b><br/>';
+							detail+='Date : '+result[x]["date"];
+							
+							myCenter = new google.maps.LatLng(result[x]["lat"],result[x]["lng"]);	
+							marker = new google.maps.Marker({
+								map:map, 
+								html:detail,
+								position: myCenter,
+								icon: image
+							});		
+							
+							
+							//Show detail on load map
+							// infowindow = new google.maps.InfoWindow({ 
+								 // map:map, 
+								 // content:detail,  
+								 // position: myCenter, 
+							 // }); 
+							 
+							map.panTo(marker.getPosition());
+							
+							 //Show detailon click
+							google.maps.event.addListener(marker,'click',function(e){
+							infowindow.setContent(this.html);
+							infowindow.open(map,this);
+							});
+							
+						}
+					}
+				}//end success
+			});//end $.ajax 	
+}
+
+
+
+
+
+////////// Show data table CheckInOut ////////////
+function CheckInOut(){
+	$("#ShowLOADING").hide();
+	var dataUser = []; //array user select
+	$("#tablePopupUserCheckInOut tbody").remove(); //clear htmlTable tbody
+	showUserCheckInOut ='<tbody style="display:block; height:300px; overflow-y:auto;">'; 
+	
+	$.ajax({ 
+			type:"POST",
+			url:"sessionLogin.php",
+			cache:false,
+			dataType:"JSON",
+			async:false,
+			success:function(jsonCheckIO){
+				for(var j=0; j<jsonCheckIO.length; j++){
+					showUserCheckInOut += '<tr style="display:table; width:100%; table-layout:fixed;">';
+					showUserCheckInOut += '<td style="text-align:center;"> <input type="checkbox" name="'+j+'" id="chkUserCheckInOut'+j+'" value="'+jsonCheckIO[j].userid+'" style="width:15px; height:15px;"> </td>';
+					showUserCheckInOut += '<td style="text-align:center;">'+jsonCheckIO[j].userid+'</td>';
+					showUserCheckInOut += '<td style="text-align:left">'+jsonCheckIO[j].name+'</td>';
+					showUserCheckInOut += '<td style="text-align:left">'+jsonCheckIO[j].branch+'</td>';
+					showUserCheckInOut += '<td style="text-align:left">'+jsonCheckIO[j].position+'</td>';
+					showUserCheckInOut += '</tr>';
+				}
+				showUserCheckInOut += '</tbody>';
+				$("#tablePopupUserCheckInOut" ).append(showUserCheckInOut);
+					var	tablePopupUserCheckInOut = $("#tablePopupUserCheckInOut").DataTable({
+						responsive: true, //
+						paging : false,  //ปิดการแบ่งหน้า
+						destroy: true,  //Clear table
+						lengthChange: false,
+
+					});	
+		}
+	});
+//-----------------------------------------//
+	$('#BTGetUserCheckInOut').click(function() {
+		document.getElementById('PopupSelectUser').style.display='block';
+	}); //end BTGetUserCheckInOut Popup
+	
+	$("#CheckAlluserCheckInOut").change(function () {
+        if (this.checked==true) {
+            $('#tablePopupUserCheckInOut tbody input[type="checkbox"]').prop('checked', true);
+			
+			$('#tablePopupUserCheckInOut tbody input[type="checkbox"]').each(function(){
+				var userID = $(this).val();
+				var NoArray = dataUser.indexOf(userID);			
+				if(NoArray == -1) {
+					dataUser.push(userID);
+				}
+			});
+
+        } else {
+            $('#tablePopupUserCheckInOut tbody input[type="checkbox"]').prop('checked', false);
+			
+			$('#tablePopupUserCheckInOut tbody input[type="checkbox"]').each(function(){
+				var userID = $(this).val();
+				var NoArray = dataUser.indexOf(userID);
+				if(NoArray != -1) {
+					dataUser.splice(NoArray, 1);
+				}
+			});
+        }
+    }); //end check all
+
+	
+	$("#tablePopupUserCheckInOut tbody input[type='checkbox']").change(function () {
+        if (this.checked==true) {
+			var userID = $(this).val();
+			var NoArray = dataUser.indexOf(userID);	
+			if(NoArray == -1) {
+				dataUser.push(userID);
+			}
+			
+        } else {
+			var userID = $(this).val();
+			var NoArray = dataUser.indexOf(userID);
+			if(NoArray != -1) {
+				dataUser.splice(NoArray, 1);
+			}
+        }
+    }); //end check one user
+	
+	
+	$("#tablePopupUserCheckInOut_filter input[type='search']").on( 'keyup', function () {
+		$('#CheckAlluserCheckInOut').prop('checked', false);
+	}); //end change on key search
+	
+
+	$('#BTOkUserCheckInOut').click(function() {
+		document.getElementById('PopupSelectUser').style.display='none';
+		if(dataUser.length != 0){
+			var CountUser ='<i class="fa fa-user" ></i> '+dataUser.length+' user';
+			$('#BTGetUserCheckInOut').html(CountUser);
+		}else{
+			var CountUser ='<i class="fa fa-user" ></i> Select User';
+			$('#BTGetUserCheckInOut').html(CountUser);
+		}
+	});	//end BTOkUserCheckInOut
+	
+
+	
+	$('#BTSearchCheckInOut').click(function() {
+		//alert(sendStart+" - "+sendEnd);
+		
+		if(dataUser.length == 0){
+			alert("กรุณาเลือก User !");
+			return false;
+		}
+			$("#ShowLOADING").show();
+			$("#tableCheckInOut tbody").remove(); //clear htmlTable		
+			dataII={"dataUser":dataUser,"sendStart":sendStart,"sendEnd":sendEnd};  
+			DataCHK ='<tbody>';      
+			$.ajax({ 
+				type:"POST",
+				url:"getCheckInOut.php",
+				cache:false,
+				dataType:"JSON",
+				data:dataII,
+				async:true,
+				success:function(result){
+
+					if (typeof result == 'undefined' || result == null) { //check variable 
+						var result = [];
+					}
+
+					for(i=0; i<result.length; i++){                    
+						DataCHK += '<tr>';
+						DataCHK += '<td style="text-align:left">'+result[i]["name"]+'</td>';
+						DataCHK += '<td style="text-align:left">'+result[i]["customer"]+'</td>';
+						DataCHK += '<td style="text-align:left">'+result[i]["dateCheckIn"]+'</td>';
+						DataCHK += '<td style="text-align:left">'+result[i]["locationCheckIn"]+'</td>';
+						DataCHK += '<td style="text-align:left">'+result[i]["dateCheckOut"]+'</td>';
+						DataCHK += '<td style="text-align:left">'+result[i]["locationCheckOut"]+'</td>';
+						DataCHK += '<td style="text-align:left">'+result[i]["OperatingTime"]+'</td>';
+						DataCHK += '</tr>';
+					}//end for
+					
+                    DataCHK += '</tbody>';
+					$("#tableCheckInOut").append(DataCHK);
+					$("#ShowLOADING").hide();
+
+					var tableCheckInOut = $("#tableCheckInOut").DataTable({
+						responsive: true,
+						//paging : false,
+						destroy: true,  //Clear table
+						lengthChange: false,
+						lengthMenu: [
+							[ 10, 25, 50, -1 ],
+							[ '10 rows', '25 rows', '50 rows', 'Show all' ]
+						],
+						buttons: [ 'pageLength','excelHtml5'],
+					});
+					tableCheckInOut.buttons().container()
+						.appendTo( '#tableCheckInOut_wrapper .col-sm-6:eq(0)' );
+				}//end success
+			});//end $.ajax 
+	}); //end BTSearchCheckInOut			
+}
+
+
+
+
+
+////////// Show data table TimeAttendance ////////////
+function TimeAttendance(){
+
+	$("#ShowLOADINGTimeAttendance").hide();
+	var dataUser = []; //array user select
+	$("#tablePopupUserTimeAttendance tbody").remove(); //clear htmlTable tbody
+	showUserTimeAttendance ='<tbody style="display:block; height:300px; overflow-y:auto;">'; 
+	
+	$.ajax({ 
+			type:"POST",
+			url:"sessionLogin.php",
+			cache:false,
+			dataType:"JSON",
+			async:false,
+			success:function(jsonTAD){
+
+				for(var j=0; j<jsonTAD.length; j++){
+					showUserTimeAttendance += '<tr style="display:table; width:100%; table-layout:fixed;">';
+					showUserTimeAttendance += '<td style="text-align:center;"> <input type="checkbox" name="'+j+'" id="chkUserTimeAttendance'+j+'" value="'+jsonTAD[j].userid+'" style="width:15px; height:15px;"> </td>';
+					showUserTimeAttendance += '<td style="text-align:center;">'+jsonTAD[j].userid+'</td>';
+					showUserTimeAttendance += '<td style="text-align:left">'+jsonTAD[j].name+'</td>';
+					showUserTimeAttendance += '<td style="text-align:left">'+jsonTAD[j].branch+'</td>';
+					showUserTimeAttendance += '<td style="text-align:left">'+jsonTAD[j].position+'</td>';
+					showUserTimeAttendance += '</tr>';
+				}
+				showUserTimeAttendance += '</tbody>';
+				$("#tablePopupUserTimeAttendance" ).append(showUserTimeAttendance);
+					var	tablePopupUserTimeAttendance = $("#tablePopupUserTimeAttendance").DataTable({
+						responsive: true, //
+						paging : false,  //ปิดการแบ่งหน้า
+						destroy: true,  //Clear table
+						lengthChange: false,
+
+				});	
+			}
+	});
+		
+//-----------------------------------------//
+
+	$('#BTGetUserTimeAttendance').click(function() {
+		document.getElementById('PopupSelectUserTimeAttendance').style.display='block';
+	}); //end BTGetUserTimeAttendance Popup
+	
+	$("#CheckAlluserTimeAttendance").change(function () {
+        if (this.checked==true) {
+            $('#tablePopupUserTimeAttendance tbody input[type="checkbox"]').prop('checked', true);
+			
+			$('#tablePopupUserTimeAttendance tbody input[type="checkbox"]').each(function(){
+				var userID = $(this).val();
+				var NoArray = dataUser.indexOf(userID);			
+				if(NoArray == -1) {
+					dataUser.push(userID);
+				}
+			});
+
+        } else {
+            $('#tablePopupUserTimeAttendance tbody input[type="checkbox"]').prop('checked', false);
+			
+			$('#tablePopupUserTimeAttendance tbody input[type="checkbox"]').each(function(){
+				var userID = $(this).val();
+				var NoArray = dataUser.indexOf(userID);
+				if(NoArray != -1) {
+					dataUser.splice(NoArray, 1);
+				}
+			});
+        }
+    }); //end check all user
+	
+	
+	$("#tablePopupUserTimeAttendance tbody input[type='checkbox']").change(function () {
+        if (this.checked==true) {
+			var userID = $(this).val();
+			var NoArray = dataUser.indexOf(userID);	
+			if(NoArray == -1) {
+				dataUser.push(userID);
+			}
+			
+        } else {
+			var userID = $(this).val();
+			var NoArray = dataUser.indexOf(userID);
+			if(NoArray != -1) {
+				dataUser.splice(NoArray, 1);
+			}
+        }
+    }); //end check one user	
+	
+	$("#tablePopupUserTimeAttendance_filter input[type='search']").on( 'keyup', function () {
+		$('#CheckAlluserTimeAttendance').prop('checked', false);
+	}); //end change on key search
+	
+	$('#BTOkUserTimeAttendance').click(function() {
+		document.getElementById('PopupSelectUserTimeAttendance').style.display='none';
+		if(dataUser.length != 0){
+			var CountUser ='<i class="fa fa-user" ></i> '+dataUser.length+' user';
+			$('#BTGetUserTimeAttendance').html(CountUser);
+		}else{
+			var CountUser ='<i class="fa fa-user" ></i> Select User';
+			$('#BTGetUserTimeAttendance').html(CountUser);
+		}
+	});	//end BTOkUserCheckInOut
+	
+	$('#BTSearchTimeAttendance').click(function() {
+		
+		if(dataUser.length == 0){
+			alert("กรุณาเลือก User !");
+			return false;
+		}
+		dataUser.toString();
+		//alert(dataUser);
+		//alert(sendStartTAD+" - "+sendEndTAD);
+			$("#ShowLOADINGTimeAttendance").show();
+			$("#tableTimeAttendance tbody").remove(); //clear htmlTable		
+			dataII={"dataUser":dataUser,"sendStartTAD":sendStartTAD,"sendEndTAD":sendEndTAD};  
+			DataTAD ='<tbody>';      
+			$.ajax({ 
+				type:"POST",
+				url:"getTimeAttendance.php",
+				cache:false,
+				dataType:"JSON",
+				data:dataII,
+				async:true,
+				success:function(result){
+
+					if (typeof result == 'undefined' || result == null) { //check variable 
+						var result = [];
+					}
+
+					for(i=0; i<result.length; i++){                    
+						DataTAD += '<tr>';
+						DataTAD += '<td style="text-align:left">'+result[i]["name"]+'</td>';
+						DataTAD += '<td style="text-align:left">'+result[i]["startTime"]+'</td>';
+						DataTAD += '<td style="text-align:left">'+result[i]["locationStartTime"]+'</td>';
+						DataTAD += '<td style="text-align:left">'+result[i]["endTime"]+'</td>';
+						DataTAD += '<td style="text-align:left">'+result[i]["locationEndTime"]+'</td>';
+						DataTAD += '</tr>';
+					}//end for
+					
+                    DataTAD += '</tbody>';
+					$("#tableTimeAttendance").append(DataTAD);
+					$("#ShowLOADINGTimeAttendance").hide();
+
+					var tableTimeAttendance = $("#tableTimeAttendance").DataTable({
+						responsive: true,
+						//paging : false,
+						destroy: true,  //Clear table
+						lengthChange: false,
+						lengthMenu: [
+							[ 10, 25, 50, -1 ],
+							[ '10 rows', '25 rows', '50 rows', 'Show all' ]
+						],
+						buttons: [ 'pageLength','excelHtml5'],
+					});
+					tableTimeAttendance.buttons().container()
+						.appendTo( '#tableTimeAttendance_wrapper .col-sm-6:eq(0)' );
+				}//end success
+			});//end $.ajax 
+	}); //end BTSearchTimeAttendance	
+}
+
+
+
+
+
+
+////////// Show data table Mileage ////////////
+function Mileage(){
+
+	$("#ShowLOADINGMileage").hide();
+	var dataUser = []; //array user select
+	$("#tablePopupUserMileage tbody").remove(); //clear htmlTable tbody
+	showUserMileage ='<tbody style="display:block; height:300px; overflow-y:auto;">'; 
+	
+	$.ajax({ 
+			type:"POST",
+			url:"sessionLogin.php",
+			cache:false,
+			dataType:"JSON",
+			async:false,
+			success:function(jsonML){
+
+				for(var j=0; j<jsonML.length; j++){
+					showUserMileage += '<tr style="display:table; width:100%; table-layout:fixed;">';
+					showUserMileage += '<td style="text-align:center;"> <input type="checkbox" name="'+j+'" id="chkUserTimeAttendance'+j+'" value="'+jsonML[j].userid+'" style="width:15px; height:15px;"> </td>';
+					showUserMileage += '<td style="text-align:center;">'+jsonML[j].userid+'</td>';
+					showUserMileage += '<td style="text-align:left">'+jsonML[j].name+'</td>';
+					showUserMileage += '<td style="text-align:left">'+jsonML[j].branch+'</td>';
+					showUserMileage += '<td style="text-align:left">'+jsonML[j].position+'</td>';
+					showUserMileage += '</tr>';
+				}
+				showUserMileage += '</tbody>';
+				$("#tablePopupUserMileage" ).append(showUserMileage);
+					var	tablePopupUserMileage = $("#tablePopupUserMileage").DataTable({
+						responsive: true, //
+						paging : false,  //ปิดการแบ่งหน้า
+						destroy: true,  //Clear table
+						lengthChange: false,
+
+				});	
+			}
+	});
+		
+//-----------------------------------------//
+
+	$('#BTGetUserMileage').click(function() {
+		document.getElementById('PopupSelectUserMileage').style.display='block';
+	}); //end BTGetUserMileage Popup
+	
+	$("#CheckAlluserMileage").change(function () {
+        if (this.checked==true) {
+            $('#tablePopupUserMileage tbody input[type="checkbox"]').prop('checked', true);
+			
+			$('#tablePopupUserMileage tbody input[type="checkbox"]').each(function(){
+				var userID = $(this).val();
+				var NoArray = dataUser.indexOf(userID);			
+				if(NoArray == -1) {
+					dataUser.push(userID);
+				}
+			});
+
+        } else {
+            $('#tablePopupUserMileage tbody input[type="checkbox"]').prop('checked', false);
+			
+			$('#tablePopupUserMileage tbody input[type="checkbox"]').each(function(){
+				var userID = $(this).val();
+				var NoArray = dataUser.indexOf(userID);
+				if(NoArray != -1) {
+					dataUser.splice(NoArray, 1);
+				}
+			});
+        }
+    }); //end check all user
+	
+	$("#tablePopupUserMileage tbody input[type='checkbox']").change(function () {
+        if (this.checked==true) {
+			var userID = $(this).val();
+			var NoArray = dataUser.indexOf(userID);	
+			if(NoArray == -1) {
+				dataUser.push(userID);
+			}
+			
+        } else {
+			var userID = $(this).val();
+			var NoArray = dataUser.indexOf(userID);
+			if(NoArray != -1) {
+				dataUser.splice(NoArray, 1);
+			}
+        }
+    }); //end check one user
+	
+	$("#tablePopupUserMileage_filter input[type='search']").on( 'keyup', function () {
+		$('#CheckAlluserMileage').prop('checked', false);
+	}); //end change on key search
+	
+	$('#BTOkUserMileage').click(function() {
+		document.getElementById('PopupSelectUserMileage').style.display='none';
+		if(dataUser.length != 0){
+			var CountUser ='<i class="fa fa-user" ></i> '+dataUser.length+' user';
+			$('#BTGetUserMileage').html(CountUser);
+		}else{
+			var CountUser ='<i class="fa fa-user" ></i> Select User';
+			$('#BTGetUserMileage').html(CountUser);
+		}
+	});	//end BTOkUserMileage
+	
+	$('#BTSearchMileage').click(function() {
+		
+		if(dataUser.length == 0){
+			alert("กรุณาเลือก User !");
+			return false;
+		}
+		dataUser.toString();
+		//alert(dataUser);
+		//alert(sendStartML+" - "+sendEndML);
+			$("#ShowLOADINGMileage").show();
+			$("#tableMileage tbody").remove(); //clear htmlTable		
+			dataII={"dataUser":dataUser,"sendStartML":sendStartML,"sendEndML":sendEndML};  
+			DataTAD ='<tbody>';      
+			$.ajax({ 
+				type:"POST",
+				url:"getMileage.php",
+				cache:false,
+				dataType:"JSON",
+				data:dataII,
+				async:true,
+				success:function(result){
+
+					if (typeof result == 'undefined' || result == null) { //check variable 
+						var result = [];
+					}
+
+					for(i=0; i<result.length; i++){                    
+						DataTAD += '<tr>';
+						DataTAD += '<td style="text-align:left">'+result[i]["name"]+'</td>';
+						DataTAD += '<td style="text-align:left">'+result[i]["startTime"]+'</td>';
+						DataTAD += '<td style="text-align:left">'+result[i]["locationStartTime"]+'</td>';
+						DataTAD += '<td style="text-align:left">'+result[i]["endTime"]+'</td>';
+						DataTAD += '<td style="text-align:left">'+result[i]["locationEndTime"]+'</td>';
+						DataTAD += '<td style="text-align:left">'+result[i]["timeTravel"]+'</td>';
+						DataTAD += '<td style="text-align:left">'+result[i]["mileage"]+'</td>';
+						DataTAD += '</tr>';
+					}//end for
+					
+                    DataTAD += '</tbody>';
+					$("#tableMileage").append(DataTAD);
+					$("#ShowLOADINGMileage").hide();
+
+					var tableMileage = $("#tableMileage").DataTable({
+						responsive: true,
+						//paging : false,
+						destroy: true,  //Clear table
+						lengthChange: false,
+						lengthMenu: [
+							[ 10, 25, 50, -1 ],
+							[ '10 rows', '25 rows', '50 rows', 'Show all' ]
+						],
+						buttons: [ 'pageLength','excelHtml5'],
+					});
+					tableMileage.buttons().container()
+						.appendTo( '#tableMileage_wrapper .col-sm-6:eq(0)' );
+				}//end success
+			});//end $.ajax 
+	}); //end BTSearchMileage
+}
+
+
+
+
+
+
+///////////////////////// Datepicker Zone ////////////////////////////////////////////
+
+var start = (moment().subtract(0, 'day').startOf('today'));
+var end = (moment().subtract(0, 'day').endOf('today'));
+
+function datepickerCheckInOut(){
+		function cb(start, end) {
+			$('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+				sendStart = start.format('YYYY/MM/DD');
+				sendEnd = end.format('YYYY/MM/DD');
+				selfaculty="";  //clear faculty seclect
+				lastselfaculty="";  //clear lastselfaculty seclect
+	  
+		}//end function cb
+
+		$('#reportrange').daterangepicker({
+			startDate: start,
+			endDate: end,
+			applyClass: 'down',
+			cancelClass:'down'  /*,
+			ranges: {
+				[start.format('YYYY-MMM')]: [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+				[moment().subtract(2, 'month').startOf('month').format('YYYY-MMM')]: [moment().subtract(2, 'month').startOf('month'), moment().subtract(2, 'month').endOf('month')],
+				[moment().subtract(3, 'month').startOf('month').format('YYYY-MMM')]: [moment().subtract(3, 'month').startOf('month'), moment().subtract(3, 'month').endOf('month')],
+				[moment().subtract(4, 'month').startOf('month').format('YYYY-MMM')]: [moment().subtract(4, 'month').startOf('month'), moment().subtract(4, 'month').endOf('month')]
+			}*/
+		}, cb);
+		
+		cb(start, end);
+}//end function datepickerCheckInOut
+
+
+var startTAD = (moment().subtract(0, 'day').startOf('today'));
+var endTAD = (moment().subtract(0, 'day').endOf('today'));
+function datepickerTimeAttendance(){
+		function cb(startTAD, endTAD) {
+			$('#reportrangeTimeAttendance span').html(startTAD.format('MMMM D, YYYY') + ' - ' + endTAD.format('MMMM D, YYYY'));
+				sendStartTAD = startTAD.format('YYYY/MM/DD');
+				sendEndTAD = endTAD.format('YYYY/MM/DD');
+				selfaculty="";  //clear faculty seclect
+				lastselfaculty="";  //clear lastselfaculty seclect
+	  
+		}//end function cb
+
+		$('#reportrangeTimeAttendance').daterangepicker({
+			startDate: startTAD,
+			endDate: endTAD,
+			applyClass: 'down',
+			cancelClass:'down'  /*,
+			ranges: {
+				[startTAD.format('YYYY-MMM')]: [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+				[moment().subtract(2, 'month').startOf('month').format('YYYY-MMM')]: [moment().subtract(2, 'month').startOf('month'), moment().subtract(2, 'month').endOf('month')],
+				[moment().subtract(3, 'month').startOf('month').format('YYYY-MMM')]: [moment().subtract(3, 'month').startOf('month'), moment().subtract(3, 'month').endOf('month')],
+				[moment().subtract(4, 'month').startOf('month').format('YYYY-MMM')]: [moment().subtract(4, 'month').startOf('month'), moment().subtract(4, 'month').endOf('month')]
+			}*/
+		}, cb);
+		
+		cb(startTAD, endTAD);
+}//end function datepickerTimeAttendance
+
+
+
+var startML = (moment().subtract(0, 'day').startOf('today'));
+var endML = (moment().subtract(0, 'day').endOf('today'));
+function datepickerMileage(){
+		function cb(startML, endML) {
+			$('#reportrangeMileage span').html(startML.format('MMMM D, YYYY') + ' - ' + endML.format('MMMM D, YYYY'));
+				sendStartML = startML.format('YYYY/MM/DD');
+				sendEndML = endML.format('YYYY/MM/DD');
+				selfaculty="";  //clear faculty seclect
+				lastselfaculty="";  //clear lastselfaculty seclect
+	  
+		}//end function cb
+
+		$('#reportrangeMileage').daterangepicker({
+			startDate: startML,
+			endDate: endML,
+			applyClass: 'down',
+			cancelClass:'down'  /*,
+			ranges: {
+				[startML.format('YYYY-MMM')]: [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+				[moment().subtract(2, 'month').startOf('month').format('YYYY-MMM')]: [moment().subtract(2, 'month').startOf('month'), moment().subtract(2, 'month').endOf('month')],
+				[moment().subtract(3, 'month').startOf('month').format('YYYY-MMM')]: [moment().subtract(3, 'month').startOf('month'), moment().subtract(3, 'month').endOf('month')],
+				[moment().subtract(4, 'month').startOf('month').format('YYYY-MMM')]: [moment().subtract(4, 'month').startOf('month'), moment().subtract(4, 'month').endOf('month')]
+			}*/
+		}, cb);
+		
+		cb(startML, endML);
+}//end function datepickerMileage
+
+
+
+
+///////////////////////// Show user Usermanagement ////////////////////////////////////////////
+function Usermanagement(){
+	showUsermanagement ='<tbody style="display:block; height:300px; overflow-y:auto;">'; 
+	$.ajax({ 
+			type:"POST",
+			url:"sessionLogin.php",
+			cache:false,
+			dataType:"JSON",
+			async:false,
+			success:function(jsonUM){
+				for(var j=0; j<jsonUM.length; j++){
+					showUsermanagement += '<tr style="display:table; width:100%; table-layout:fixed;">';
+					showUsermanagement += '<td style="text-align:center;">'+jsonUM[j].userid+'</td>';
+					showUsermanagement += '<td style="text-align:left">'+jsonUM[j].name+'</td>';
+					showUsermanagement += '<td style="text-align:center">'+jsonUM[j].position+'</td>';					
+					showUsermanagement += '<td style="text-align:center">'+jsonUM[j].branch+'</td>';
+					showUsermanagement += '<td style="text-align:center"><button name="BTedit" value="'+jsonUM[j].userid+'" class="btn btn-default" style="background-color:#d9d9d9; border-color:#d9d9d9;"><span class="glyphicon glyphicon-edit"></span></button></td>';
+					showUsermanagement += '<td style="text-align:center"><button class="btn btn-default" style="background-color:#d9d9d9; border-color:#d9d9d9;" onclick=javascript:if(confirm("ยืนยันการลบข้อมูล")==true){window.location="deleteUser.php?userid='+jsonUM[j].userid+'";}><span class="glyphicon glyphicon-trash"></span></button></td>';					
+					showUsermanagement += '</tr>';
+				}
+				showUsermanagement += '</tbody>';
+				$("#tableUsermanagement" ).append(showUsermanagement);
+				var	tableUsermanagement = $("#tableUsermanagement").DataTable({
+						responsive: true, //
+						paging : false,  //ปิดการแบ่งหน้า
+						destroy: true,  //Clear table
+						lengthChange: false,
+						buttons: [{
+							text: '<i class="fa fa-user-plus" ></i> New User'
+						}]
+				});	
+				tableUsermanagement.buttons().container().appendTo("#tableUsermanagement_wrapper .col-sm-6:eq(0)");
+			}
+	});
+	
+	//click edit user
+	var IDEdit ;
+	$("#tableUsermanagement tbody button[name='BTedit']").click(function () {
+		var userID = $(this).val();
+		//alert(userID);
+		data={"userID":userID};       
+		$.ajax({ 
+			type:"POST",
+			url:"GetdataEditUser.php",
+			cache:false,
+			dataType:"JSON",
+			data:data,
+			async:false,
+			success:function(result){
+				IDEdit = result.userid;
+				showDataEditUser ='<p id="EditDataUserID" value="'+result.userid+'"><label><i class="fa fa-id-badge"></i> User ID : '+result.userid+'</label></p>';
+				showDataEditUser += '<p style="margin:0 0 0 20px"><label><i class="fa fa-lock"></i> Password</label></p>';
+				showDataEditUser += '<input style="margin:0 0 10px" class="w3-input w3-border" type="password" id="EditDataPassword" value="'+result.password+'">';
+				showDataEditUser += '<p style="margin:0 0 0 20px"><label><i class="fa fa-user"></i> Name</label></p>';
+				showDataEditUser += '<input style="margin:0 0 10px" class="w3-input w3-border" type="text" id="EditDataName" value="'+result.name+'">';
+				showDataEditUser += '<p style="margin:0 0 0 20px"><label><i class="fa fa-globe"></i> Branch</label></p>';
+				showDataEditUser += '<input style="margin:0 0 10px" class="w3-input w3-border" type="text" id="EditDataBranch" value="'+result.branch+'">';
+				showDataEditUser += '<p style="margin:0 0 0 20px"><label><i class="fa fa-street-view"></i> Position</label></p>';
+				showDataEditUser += '<input style="margin:0 0 10px" class="w3-input w3-border" type="text" id="EditDataPosition" value="'+result.position+'">';
+				showDataEditUser += '<p style="margin:0 0 0 20px"><label><i class="fa fa-sitemap"></i> Head</label></p>';
+				showDataEditUser += '<input style="margin:0 0 10px" class="w3-input w3-border" type="text" id="EditDataHead" value="'+result.head+'">';
+				
+				$("#dataEditUser").html(showDataEditUser);
+				
+				document.getElementById('PopupEditUser').style.display='block';
+
+
+
+			}//end success
+		});//end $.ajax 			
+		
+	});
+	
+	$("#BTSaveEditUsermanagement").click(function () {
+		DataUserID = IDEdit;
+		DataPassword = document.getElementById('EditDataPassword').value;
+		DataName = document.getElementById('EditDataName').value;
+		DataBranch = document.getElementById('EditDataBranch').value;
+			DataBranch = DataBranch.toUpperCase();
+		DataPosition = document.getElementById('EditDataPosition').value;
+		DataHead = document.getElementById('EditDataHead').value;
+			DataHead = DataHead.toUpperCase();
+		
+		//alert("[DataUserID : "+DataUserID+"] [DataPassword : "+DataPassword+"] [DataName : "+DataName+"] [DataBranch : "+DataBranch+"] [DataPosition : "+DataPosition+"] [DataHead : "+DataHead+"]");
+		
+		if((DataUserID == "")||(DataPassword == "")||(DataName == "")||(DataBranch == "")||(DataPosition == "")||(DataHead == "")){
+			$("#Editfail").text("กรุณาใส่ข้อมูลให้ครบ");
+			return false;
+		}
+		
+		$.ajax({  
+			type:"POST",
+			url:"EditUser.php",
+			data : {DataUserID:DataUserID, DataPassword:DataPassword, DataName:DataName, DataBranch:DataBranch, DataPosition:DataPosition, DataHead:DataHead}
+			}).done(function(text){
+				//alert(text);
+				document.getElementById('PopupEditUser').style.display='none';
+				location.reload();
+			});		
+		
+
+	});	
+	
+	
+	
+	
+	
+	
+	//new user
+	$("#tableUsermanagement_wrapper a").click(function () {
+		document.getElementById('PopupUsermanagement').style.display='block';
+
+	});	
+	
+	$("#BTSaveNewUsermanagement").click(function () {
+		DataUserID = document.getElementById('DataUserID').value;
+		DataPassword = document.getElementById('DataPassword').value;
+		DataName = document.getElementById('DataName').value;
+		DataBranch = document.getElementById('DataBranch').value;
+			DataBranch = DataBranch.toUpperCase();
+		DataPosition = document.getElementById('DataPosition').value;
+		DataHead = document.getElementById('DataHead').value;
+			DataHead = DataHead.toUpperCase();
+		
+		//alert("DataUserID : "+DataUserID+"DataPassword : "+DataPassword+"DataName : "+DataName+"DataBranch : "+DataBranch+"DataPosition : "+DataPosition+"DataHead : "+DataHead);
+		
+		if((DataUserID == "")||(DataPassword == "")||(DataName == "")||(DataBranch == "")||(DataPosition == "")||(DataHead == "")){
+			$("#fail").text("กรุณาใส่ข้อมูลให้ครบ");
+			return false;
+		}
+		$.ajax({  
+			type:"POST",
+			url:"NewUser.php",
+			data : {DataUserID:DataUserID, DataPassword:DataPassword, DataName:DataName, DataBranch:DataBranch, DataPosition:DataPosition, DataHead:DataHead}
+			}).done(function(text){
+				//alert(text);
+				if(text == "have user"){
+					$("#fail").text("User ID ซ้ำ");
+				}else{
+					document.getElementById('PopupUsermanagement').style.display='none';
+					location.reload();
+				}
+			});		
+	});	
+}
+
+</script>
+
+</body>
+</html>
